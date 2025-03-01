@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Dashboard from "./components/pages/Dashboard";
+import Login from "./pages/Login";
+import Analytics from "./pages/Analytics";
+import Accounts from "./pages/Accounts";
+import Settings from "./pages/Settings";
+import './styles/global.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    return (
+        <Router>
+            <div className="app-container">
+                {isAuthenticated && <Sidebar />}
+                <div className="main-content">
+                    <Routes>
+                        <Route path="/" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/analytics" element={<Analytics />} />
+                        <Route path="/accounts" element={<Accounts />} />
+                        <Route path="/settings" element={<Settings />} />
+                    </Routes>
+                </div>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
